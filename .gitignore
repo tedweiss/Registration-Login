@@ -1,2 +1,5 @@
 
 /backend/includes/db_config.php
+
+# dependencies
+/frontend/node_modules
