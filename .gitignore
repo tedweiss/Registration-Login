@@ -1,5 +1,7 @@
-
+/backend/error_log
 /backend/includes/db_config.php
 
 # dependencies
 /frontend/node_modules
+# production
+/frontend/dist
