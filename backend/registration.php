@@ -2,8 +2,10 @@
 
   require_once './includes/db_link.php';
   
-  $email = '4me@me.me';//mysqli_real_escape_string($link, $_POST['email']);
-$response = "";
+  $email = '6me@me.me';//mysqli_real_escape_string($link, $_POST['email']);
+  $password = "password1";//mysqli_real_escape_string($link, $_POST['password']);
+  echo "You are running PHP ".phpversion();
+  $response = "response";
   $sql = "SELECT email FROM users";
   // check if email already exists
   if ($result = mysqli_query($link, $sql)) {
@@ -15,18 +17,17 @@ $response = "";
       }
     }
     if ($response != "Duplicate email") {
-      insertIntoDB($link);
+      insertIntoDB($link, $email, $password);
     } else {
       echo $response;
     }
   }
 
-function insertIntoDB($link) {
-  $password = mysqli_real_escape_string($link, $_POST['password']);
+function insertIntoDB($link, $email, $password) {
   $salt = dechex(mt_rand(0, 2147483647)) . dechex(mt_rand(0, 2147483647)); 
-
+  $password = hash('sha256', $password . $salt);
   // attempt insert query execution
-  $sqlInsert = "INSERT INTO users (email, password, salt) VALUES ('4me@me.me', 'ABCdef123', '$salt')";
+  $sqlInsert = "INSERT INTO users (email, password, salt) VALUES ('$email', '$password', '$salt')";
 
   if (mysqli_query($link, $sqlInsert)) {
     echo "<div>Successful insert</div>";
